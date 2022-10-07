@@ -34,8 +34,15 @@ def convert_into_sentences(lines):
 file_list = list(sorted(glob(os.path.join(file_dir, '*.txt'))))
 
 for i, file_path in enumerate(file_list):
-    sents, n_sent = convert_into_sentences(open(file_path).readlines())
-    print('\n'.join(sents))
-    print('\n\n\n\n')
+    try:
+        sents, n_sent = convert_into_sentences(open(file_path).readlines())
+    except:
+        continue
+    new_sents = []
+    for sent in sents:
+        if len(sent) > 10:
+            new_sents.append(sent)
+    print('\n'.join(new_sents))
+    # print('\n\n\n\n')
     sys.stderr.write(
         '{}/{}\t{}\t{}\n'.format(i, len(file_list), n_sent, file_path))
